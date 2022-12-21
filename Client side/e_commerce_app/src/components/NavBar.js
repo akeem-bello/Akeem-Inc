@@ -18,11 +18,6 @@ const NavBar = ()=>{
         color: 'blue',
     }
 
-    // let test = {
-    //     display: 'inLine',
-    //     marginRight: '40px',
-    //     color: '#0a58ca'
-    // }
   return (
     <div className="bg-dark p-3">
         <div className="container text-center">

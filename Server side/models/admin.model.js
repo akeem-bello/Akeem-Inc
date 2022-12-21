@@ -1,26 +1,24 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-
-userSchema = mongoose.Schema({
-    firstName:String,
-    lastName:String,
+adminSchema = mongoose.Schema({
+    name:String,
     email:String,
     password:String
-})
+});
 
 const saltRound = 10;
-userSchema.pre('save', function(next){
+adminSchema.pre('save', function(next){
     bcrypt.hash(this.password, saltRound, (err, hashedPassword)=>{
         if(err){
             console.log(err)
         }else{
-            this.password = hashedPassword
-            next()
+            this.password = hashedPassword;
+            next();
         }
     })
 })
 
-userSchema.methods.validatePassword = function(password, callback){
+adminSchema.methods.validatePassword = function(password, callback){
     bcrypt.compare(password, this.password, (err, same)=>{
         if(!err){
             callback(err, same);
@@ -30,5 +28,5 @@ userSchema.methods.validatePassword = function(password, callback){
     })
 }
 
-const userModel = mongoose.model("user_tb", userSchema);
-module.exports = userModel;
+const adminModel = mongoose.model('admin_tb', adminSchema);
+module.exports = adminModel;

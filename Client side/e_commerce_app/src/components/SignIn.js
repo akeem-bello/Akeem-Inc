@@ -13,9 +13,11 @@ const Account = ()=>{
   const signIn = ()=>{
     const currentUser = {email, password};
     axios.post(url, currentUser).then((res)=>{
-      setmessage(res.data.message)
+      setmessage(res.data.message);
+      if(res.data.status){
+        navigate('/')
+      }
     })
-    navigate('/')
   }
 
     let divStyle = {
@@ -30,8 +32,9 @@ const Account = ()=>{
     <>
         <div className="container mt-2">
            <div className="row" style={divStyle}>
-               <div className="col-7 mx-auto mt-5 shadow p-5">
-                   <h3>Sign-In</h3>
+               <div className="col-7 mx-auto mt-5 shadow p-4">
+                   <h3 className='text-center mb-3'>Sign-In</h3>
+                   <div className='text-center'>{message}</div>
                       <input className='form form-control my-2' type="text" placeholder='Enter your email' value={email} onChange={(e)=>setemail(e.target.value)}/>
                       <input className='form form-control my-2' type="text" placeholder='Enter your password' value={password} onChange={(e)=>setpassword(e.target.value)}/>
                       <button type='submit' className='btn btn-primary my-2 w-100' onClick={signIn}>Sign In</button> 
