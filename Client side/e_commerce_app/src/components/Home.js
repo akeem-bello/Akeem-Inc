@@ -1,6 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react';
+import axios from 'axios';
 
-const Home = ({itemImage, itemDescription, itemPrice, addToCart})=>{
+const Home = ()=>{
+    const url = 'http://localhost:4000/users/home';
+    const [product, setproduct] = useState([]);
+    axios.get(url).then((res)=>{
+        setproduct(res.data.products);
+    })
+
   let homeDivStyle ={
     fontSize: '13px',
     marginBottom: '20px',
@@ -14,14 +21,27 @@ let firstDivStyle ={
     <>
         <div className="container">
           <div className="row">
-            <div className="col-7 mx-auto text-center">
-              <div className="my-2"><h1>Welcome to</h1></div> 
-              <div className="div"><img src="9bdab42795d64d0697426dcbc1a841d6.png"/></div>
-            </div>
+                <div className="col-7 mx-auto text-center">
+                    <div className="my-2"><h1>Welcome to</h1></div> 
+                    <div className="div"><img src="9bdab42795d64d0697426dcbc1a841d6.png" alt='logo'/></div>
+                </div>
           </div>
 
-          <div className="row">
-                <div className="col-4" style={firstDivStyle}>
+            <div className="row">
+                {product.map((product)=>{
+                    <div className="col-4" style={firstDivStyle}>
+                        <img src={product.productImage} alt='image'/>
+                        <div style={homeDivStyle}>{product.productName}</div>
+                        <div style={homeDivStyle}>{product.productPrice}</div>
+                        <button className='btn btn-primary'>Add to Cart</button>
+                    </div>
+                })}
+                    
+            </div>
+        </div>
+
+
+        {/* <div className="col-4" style={firstDivStyle}>
                     <img src="https://ng.jumia.is/unsafe/fit-in/300x300/filters:fill(white)/product/42/934348/1.jpg?6691"/>
                     <div style={homeDivStyle}>Mama'S Pride Nigerian Parboiled Rice 25kg</div>
                     <div style={homeDivStyle}>#15,960</div>
@@ -82,9 +102,7 @@ let firstDivStyle ={
                     <div style={homeDivStyle}>Adidas SPORTS PERFORMANCE OWN THE RUN TGT TIGHTS</div>
                     <div style={homeDivStyle}>#33,320</div>
                     <button className='btn btn-primary'>Add to Cart</button>
-                </div>
-            </div>
-        </div>
+                </div> */}
     </>
   )
 }

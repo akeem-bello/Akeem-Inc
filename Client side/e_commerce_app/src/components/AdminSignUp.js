@@ -34,9 +34,9 @@ const AdminSignUp = ()=> {
                     <h3 className='text-center mb-4'>Admin Sign Up</h3>
                     <div className='text-center'>{message}</div>
                     <form action="">
-                        <input type="text" className='form-control my-2' placeholder='Name'/>
-                        <input type="text" className='form-control my-2' placeholder='Email'/>
-                        <input type="text" className='form-control my-2' placeholder='Password'/>
+                        <input type="text" className='form-control my-2' placeholder='Name' value={name} onChange={(e)=>setname(e.target.value)}/>
+                        <input type="text" className='form-control my-2' placeholder='Email' value={email} onChange={(e)=>setemail(e.target.value)}/>
+                        <input type="text" className='form-control my-2' placeholder='Password' value={password} onChange={(e)=>setpassword(e.target.value)}/>
                         <button type='submit' className='btn btn-success w-100 mt-3' onClick={signUp}>Sign Up</button>
                     </form>
                 </div>
