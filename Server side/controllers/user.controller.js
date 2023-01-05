@@ -1,6 +1,9 @@
 const userModel = require('../models/user.model');
 const adminModel = require('../models/admin.model');
 const productsModel = require('../models/products.model');
+const SECRET = process.env.SECRET;
+const SECRET2 = process.env.SECRET_TWO;
+const jwt = require('jsonwebtoken');
 
 const registerUser = (req, res)=>{
     const userDetails = req.body;
@@ -43,7 +46,8 @@ const userSignIn = (req, res)=>{
                         if(!same){
                             res.send({message: 'Your password is incorrect.', status: false});
                         }else{
-                            res.send({message: 'Sign in successful.', status: true});
+                            const token = jwt.sign({email}, SECRET, {expiresIn: '1h'})
+                            res.send({message: 'Sign in successful.', status: true, token});
                         }
                     }
                 })
@@ -93,7 +97,8 @@ const adminSignIn = (req, res)=>{
                         if(!same){
                             res.send({message: 'Your password is incorrect.', status:false});
                         }else{
-                            res.send({message: 'Sign in successful.', status:true});
+                            const token2 = jwt.sign({email}, SECRET2, {expiresIn: '1h'}); 
+                            res.send({message: 'Sign in successful.', status:true, token2});
                         }
                     }
                 })
@@ -103,6 +108,17 @@ const adminSignIn = (req, res)=>{
 }
 
 const addItems = (req, res)=>{
+    const token2 = req.headers.authorization.split(' ')[1];
+    jwt.verify(token2, SECRET2, (err, result)=>{
+        if(err){
+            res.send({message: 'jwt failed', err, status:false})
+        }else{
+            const email = result.email
+            adminModel.findOne({email:email}, (err, result)=>{
+                res.send({message: 'congrats', status:true, result})
+            }) 
+        } 
+    })
     const productDetails = req.body;
     let form = new productsModel(productDetails);
     form.save((err)=>{

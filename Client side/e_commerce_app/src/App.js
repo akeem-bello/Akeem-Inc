@@ -10,6 +10,7 @@ import AddItems from './components/AddItems';
 import AdminSignUp from './components/AdminSignUp';
 
 const App = ()=>{
+  const token2 = localStorage.token2;
   return (
     <>
       <NavBar/>
@@ -21,7 +22,7 @@ const App = ()=>{
         <Route path='/cart' element={<Cart />}/>
         <Route path='/admin-signin' element={<AdminSignin />}/>
         <Route path='/admin-signup' element={<AdminSignUp />}/>
-        <Route path='/admin/add-items' element={<AddItems />}/>
+        <Route path='/admin/add-items' element={token2 ? <AddItems /> : <Navigate to='/admin-signin'/>}/>
         <Route path='*' element={<PageNotFound />}/>
       </Routes>      
     </>

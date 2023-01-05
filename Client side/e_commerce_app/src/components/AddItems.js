@@ -1,14 +1,31 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const AddItems = ()=> {
     const navigate = useNavigate();
+    const token2 = localStorage.token2;
     const [productImage, setproductImage] = useState('');
     const [productName, setproductName] = useState('');
     const [productPrice, setproductPrice] = useState('');
     const [message, setmessage] = useState('');
     const url = 'http://localhost:4000/users/admin/add-items';
+
+    useEffect(() => {
+        axios.get(url, {
+          headers:{
+          "Authorization": `Bearer ${token2}`,
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        }}).then((res)=>{
+          if(!res.data.status){
+              localStorage.removeItem('token2')
+              navigate('/admin-signin')
+          }else{
+              console.log(res)
+          }
+        })
+      }, [])
 
     const addItem = ()=>{
         const itemDetails = {
@@ -30,7 +47,8 @@ const AddItems = ()=> {
     }
 
     const logOut = ()=>{
-        navigate('/admin-signin')
+        localStorage.removeItem('token2');
+        navigate('/admin-signin');
     }
     let divStyle = {
         padding: '0% 20%'

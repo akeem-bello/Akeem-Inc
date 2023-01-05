@@ -13,6 +13,7 @@ const AdminSignin = ()=> {
         const adminDetails = {email, password};
         axios.post(url, adminDetails).then((res)=>{
           setmessage(res.data.message);
+          localStorage.token2 = res.data.token2;
           if(res.data.status){
             navigate('/admin/add-items')
           }
