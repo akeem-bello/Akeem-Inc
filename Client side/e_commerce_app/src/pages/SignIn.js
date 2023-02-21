@@ -27,10 +27,15 @@ const Account = ()=>{
     let anchorStyle = {
         textDecoration: 'none'
     }
+
+    let contStyle = {
+      marginTop: '20px',
+      marginBottom: '60px'
+  }
     
   return (
     <>
-        <div className="container mt-2">
+        <div className="container" style={contStyle}>
            <div className="row" style={divStyle}>
                <div className="col-7 mx-auto mt-5 shadow p-4">
                    <h3 className='text-center mb-3'>Sign-In</h3>

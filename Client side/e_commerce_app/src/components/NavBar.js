@@ -19,7 +19,7 @@ const NavBar = ()=>{
     }
 
   return (
-    <div className="bg-dark p-3">
+    <div className="bg-dark">
         <div className="container text-center">
             <Link to='/'><img src="9bdab42795d64d0697426dcbc1a841d6.png" width={'5%'} style={linkStyle}/></Link> 
             <Link to='/' style={linkStyle}>Home</Link>

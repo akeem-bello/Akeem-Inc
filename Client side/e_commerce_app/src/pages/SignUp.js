@@ -28,9 +28,14 @@ const SignUp = ()=>{
     let divStyle = {
         padding: '0% 20%'
     }
+
+    let contStyle = {
+      marginTop: '60px',
+      marginBottom: '80px'
+  }
   return (
     <>
-       <div className="container mt-5">
+       <div style={contStyle} className='container'>
             <div className="row" style={divStyle}>
                 <div className="col-7 mx-auto shadow p-5">
                     <h3 className='text-center mb-3'>Create account</h3>

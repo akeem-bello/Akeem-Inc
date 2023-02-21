@@ -46,7 +46,7 @@ const userSignIn = (req, res)=>{
                         if(!same){
                             res.send({message: 'Your password is incorrect.', status: false});
                         }else{
-                            const token = jwt.sign({email}, SECRET, {expiresIn: '1h'})
+                            const token = jwt.sign({email}, SECRET, {expiresIn: '10h'})
                             res.send({message: 'Sign in successful.', status: true, token});
                         }
                     }
@@ -107,28 +107,32 @@ const adminSignIn = (req, res)=>{
     })
 }
 
-const addItems = (req, res)=>{
+const adminDashboard = (req, res)=>{
     const token2 = req.headers.authorization.split(' ')[1];
     jwt.verify(token2, SECRET2, (err, result)=>{
         if(err){
             res.send({message: 'jwt failed', err, status:false})
         }else{
-            const email = result.email
+            const email = result.email;
             adminModel.findOne({email:email}, (err, result)=>{
                 res.send({message: 'congrats', status:true, result})
             }) 
-        } 
+        }
     })
-    const productDetails = req.body;
-    let form = new productsModel(productDetails);
+    
+}
+
+const addItems = (req, res)=>{
+    const itemDetails = req.body;
+    let form = new productsModel(itemDetails);
     form.save((err)=>{
         if(err){
             res.status(500).send({message: 'Internal Server Error', status:false});
         }else{
             res.send({status:true});
-        }
+            }
     })
-}
+} 
 
 const displayItems = (req, res)=>{
     productsModel.find((err, products)=>{
@@ -140,11 +144,25 @@ const displayItems = (req, res)=>{
     })
 }
 
+const displayProduct = (req, res)=>{
+    productsModel.findOne({_id:req.params.id}, (err, result)=>{
+         if(err){
+            res.send(err);
+        }else{
+            res.send({result, status:true});
+        }
+    })
+       
+
+}
+
 module.exports = {
     registerUser, 
     userSignIn, 
     registerAdmin, 
     adminSignIn,
+    adminDashboard,
     addItems,
-    displayItems
+    displayItems,
+    displayProduct
 }
