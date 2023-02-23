@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
+import Rating from '../components/Rating';
 
 const Product = ()=>{
     const {_id} = useParams();
@@ -48,11 +49,7 @@ const Product = ()=>{
                 </div>
 
                 <div className="col-7">
-                  {product.productRating}
-                </div>
-
-                <div className="col-7">
-                  {product.productReviews}
+                  <Rating rating={product.productRating} />
                 </div>
               </div>
             </div>
@@ -67,12 +64,16 @@ const Product = ()=>{
 
                 <div className="col-7">
                   <p>
-                    
+                    {product.productCount > 0 ?
+                      <span className='badge bg-success'>In Stock</span> :
+                      <span className='badge bg-danger'>Out of Stock</span>
+                  }
                   </p>
                 </div>
 
                 <div className="col-7">
-                  <button className='btn btn-primary'>Add to Cart</button>
+                  {product.productCount > 0 && 
+                  <button className='btn btn-primary'>Add to Cart</button> } 
                 </div>
               </div>
             </div>

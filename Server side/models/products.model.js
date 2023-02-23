@@ -5,7 +5,6 @@ productSchema = mongoose.Schema({
     productName: String,
     productPrice: Number,
     productRating: Number,
-    productReviews: Number,
     productCount: Number
 })
 

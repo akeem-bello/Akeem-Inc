@@ -35,7 +35,6 @@ const AddItems = ()=> {
             productName,
             productPrice,
             productRating,
-            productReviews,
             productCount
         };
         axios.post(url, itemDetails).then((res)=>{

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Rating from '../components/Rating';
 
 const Home = ()=>{
     const url = 'http://localhost:4000/users/';
@@ -40,6 +41,10 @@ let firstDivStyle ={
                         <Link to={`/product/${product._id}`}>
                             <div style={homeDivStyle}><p>{product.productName}</p></div>
                         </Link>
+
+                        <div className='mb-2'>
+                          <Rating rating={product.productRating} />
+                        </div>
                         
                         <div style={homeDivStyle}><p><strong>${product.productPrice}</strong></p></div>
                         
