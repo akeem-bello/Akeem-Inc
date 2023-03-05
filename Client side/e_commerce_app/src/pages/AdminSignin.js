@@ -51,7 +51,7 @@ const AdminSignin = ()=> {
       }
   return (
     <div>
-        <div className="container">
+        <div className="container" style={{marginBottom: '105px'}}>
             <div className="row" style={divStyle}>
                 <div className="col-7 mx-auto shadow p-5 mb-5" style={colStyle}>
                     <h3 className='text-center' style={headStyle}>Admin Sign In</h3>

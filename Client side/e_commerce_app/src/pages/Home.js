@@ -10,7 +10,7 @@ const Home = ()=>{
       axios.get(url).then((res)=>{
         setallProducts(res.data.products);
     })
-    }, [])
+    }, []);
     
   let homeDivStyle ={
     fontSize: '13px',

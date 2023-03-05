@@ -1,14 +1,31 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Cart = ()=>{
+  const url = 'http://localhost:4000/users/cart';
   const [qty, setqty] = useState(1);
   const [cart, setcart] = useState([]);
+  useEffect(() => {
+    axios.get(url).then((res)=>{
+      setcart(res.data.cart);
+    })
+  }, [])
+  
 
-  let orderTotal = 745 * qty;
+  let orderTotal = 0;
+  for(let i = 0; i < cart.length; i++){
+    orderTotal += cart[i].itemPrice; 
+  }
 
-  const increaseQty = ()=>{
-    setqty(qty + 1);
+
+  const increaseQty = (cartIndex)=>{
+    for(let i = 0; i < cart.length; i++){
+      if(cart.filter((index)=>(index = cartIndex))){
+        setqty(qty + 1);
+      }
+    }
+    
   }
 
   const decreaseQty = ()=>{
@@ -43,17 +60,17 @@ const Cart = ()=>{
   let styleFive = {
     width: '25%',
     padding: '10px',
-    marginBottom: '80px',
+    height: '100%',
     backgroundColor: '#83EFE2'
   }
 
   return (
     <>
       <div className="container" style={contStyle}>
-        {/* {cart.length === 0 ? */}
+        {cart.length === 0 ?
           <div className="row bg-success p-5" style={styleOne}>
             <div className="col-4" style={styleTwo}>
-              <img src="https://res.cloudinary.com/akeem/image/upload/v1673745784/Akeem%20Inc/3081986_rkzzn8.png" width={'50%'}/>
+              <img src="https://res.cloudinary.com/akeem/image/upload/v1673745784/Akeem%20Inc/3081986_rkzzn8.png" width={'50%'} alt=''/>
             </div>
 
             <div className="col-6">
@@ -68,51 +85,49 @@ const Cart = ()=>{
               </div>
             </div>
           </div> 
-          {/* : */}
+          :
           
           <div style={styleThree}>
               <div style={styleFour}>
-                <div>
-                  <h5>Cart</h5>
-                </div>
-
-                <div className="row"><hr />
+              {cart.map((cartItem, index)=>(
+                <div className="row mb-3" key={index}><hr />
                   <div className="col-3">
-                    <img src="https://res.cloudinary.com/akeem/image/upload/v1671499375/Akeem%20Inc/1_mkgndm.jpg" width={'50%'}/>
+                    <img src={cartItem.itemImage} width={'75%'} alt={cartItem.itemName}/>
                   </div>
 
                   <div className="col-4">
-                    <p>SONY PlayStation 5 Console - Digital Edition [Model 3006649]</p>
+                    <p>{cartItem.itemName}</p>
                   </div>
 
                   <div className="col-3">
-                    <div>
-                      <h5>$745</h5>
+                    <div className='text-center'>
+                      <p>{cartItem.itemPrice * qty}</p>
                     </div><br />
                     
-                    <div>
+                    <div className='text-center'>
                       <button className='btn' onClick={decreaseQty}><i className="fa-solid fa-minus-circle"></i></button> {qty} <button className='btn' onClick={increaseQty}><i className="fas fa-plus-circle"></i></button>
                     </div>
-                  </div>
-                </div>
-                
-                  <div className='mt-3'>
-                    <button className='btn btn-sm btn-danger'><i className="fa-solid fa-trash"></i> REMOVE</button>
-                  </div>  
-              </div>
 
+                    <div className='mt-3 mb-3 text-center'>
+                    <button className='btn btn-sm btn-secondary'><i className="fa-solid fa-trash"></i> Remove</button>
+                  </div> 
+                  </div>
+                </div> 
+                 ))}
+              </div>
+               
               <div style={styleFive}>
-                <div>
-                  <h6>CART SUMMARY</h6>
+                <div className='text-center'>
+                  <h5><strong>CART SUMMARY</strong></h5>
                 </div>
 
                 <div className="row"><hr />
                   <div className="col-6">
-                    <h6>Subtotal</h6>
+                    <h6><strong>Subtotal</strong></h6>
                   </div>
 
                   <div className="col-6">
-                    <h5>${orderTotal}</h5>
+                    <h6><strong>${orderTotal}</strong></h6>
                   </div><hr />
                 </div>
 
@@ -121,7 +136,7 @@ const Cart = ()=>{
                 </div>
               </div>
             </div>
-{/* } */}
+}
         </div>          
     </>
   )

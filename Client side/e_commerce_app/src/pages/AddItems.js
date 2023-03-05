@@ -10,7 +10,6 @@ const AddItems = ()=> {
     const [productName, setproductName] = useState('');
     const [productPrice, setproductPrice] = useState('');
     const [productRating, setproductRating] = useState('');
-    const [productReviews, setproductReviews] = useState('');
     const [productCount, setproductCount] = useState('');
     const [message, setmessage] = useState('');
 
@@ -25,7 +24,6 @@ const AddItems = ()=> {
               localStorage.removeItem('token2')
               navigate('/admin-signin')
           }
-          console.log(token2)
         })
       }, []);
 
@@ -45,7 +43,6 @@ const AddItems = ()=> {
                 setproductName('');
                 setproductPrice('');
                 setproductRating('');
-                setproductReviews('');
                 setproductCount('');
             }else{
                 alert('An error occured, please try again.')
@@ -62,7 +59,7 @@ const AddItems = ()=> {
     }
   return (
     <>
-        <div className="container mt-5">
+        <div className="container mt-5" style={{marginBottom: '93px'}}>
             <button className='btn btn-secondary' onClick={logOut}>Log Out</button>
             <div className="row" style={divStyle}>
                 <div className="col-7 mx-auto shadow p-5">
@@ -77,8 +74,6 @@ const AddItems = ()=> {
                     <input type="text" className='form-control my-2' placeholder='Product Price' value={productPrice} onChange={(e)=>setproductPrice(e.target.value)}/>
 
                     <input type='text' className='form-control my-2' placeholder='Product Rating' value={productRating} onChange={(e)=>setproductRating(e.target.value)}/>
-
-                    <input type="text" className='form-control my-2' placeholder='Product Reviews' value={productReviews} onChange={(e)=>setproductReviews(e.target.value)}/>
 
                     <input type="text" className='form-control my-2' placeholder='Product Count' value={productCount} onChange={(e)=>setproductCount(e.target.value)}/>
 

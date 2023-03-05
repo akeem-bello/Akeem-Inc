@@ -13,8 +13,18 @@ const Product = ()=>{
     })
     }, []);
 
-    let contStyle = {
-      marginTop: '40px',
+  const addToCart = ()=>{
+    const url = 'http://localhost:4000/users/cart';
+    const itemDetails = {
+      itemImage: product.productImage,
+      itemName: product.productName,
+      itemPrice: product.productPrice
+    };
+    axios.post(url, itemDetails);
+  }
+  
+  let contStyle = {
+      marginTop: '60px',
       marginBottom: '75px'
   }
 
@@ -58,7 +68,7 @@ const Product = ()=>{
               <div className="row">
                 <div className="col-7">
                   <p>
-                    {product.productPrice}
+                    ${product.productPrice}
                   </p>
                 </div>
 
@@ -73,7 +83,7 @@ const Product = ()=>{
 
                 <div className="col-7">
                   {product.productCount > 0 && 
-                  <button className='btn btn-primary'>Add to Cart</button> } 
+                  <button className='btn btn-primary' onClick={addToCart}>Add to Cart</button> } 
                 </div>
               </div>
             </div>

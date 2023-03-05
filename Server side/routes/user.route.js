@@ -9,5 +9,6 @@ router.get('/admin/add-items', userController.adminDashboard);
 router.post('/admin/add-items', userController.addItems);
 router.get('/', userController.displayItems);
 router.get('/product/:id', userController.displayProduct);
-// router.post('/cart', userController.cart);
+router.post('/cart', userController.addToCart);
+router.get('/cart', userController.cart);
 module.exports = router;

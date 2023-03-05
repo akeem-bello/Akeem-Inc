@@ -1,6 +1,7 @@
 const userModel = require('../models/user.model');
 const adminModel = require('../models/admin.model');
 const productsModel = require('../models/products.model');
+const cartModel = require('../models/cart.model')
 const SECRET = process.env.SECRET;
 const SECRET2 = process.env.SECRET_TWO;
 const jwt = require('jsonwebtoken');
@@ -156,6 +157,27 @@ const displayProduct = (req, res)=>{
 
 }
 
+const addToCart = (req, res)=>{
+    const itemDetails = req.body;
+    let form = new cartModel(itemDetails);
+    form.save((err)=>{
+        if(err){
+            console.log(err);
+            res.status(500).send({message: 'Internal Server Error', status:false})
+        }
+    })
+}
+
+const cart = (req, res)=>{
+    cartModel.find((err, cart)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send({cart});
+        }
+    })
+}
+
 module.exports = {
     registerUser, 
     userSignIn, 
@@ -164,5 +186,7 @@ module.exports = {
     adminDashboard,
     addItems,
     displayItems,
-    displayProduct
+    displayProduct,
+    addToCart,
+    cart
 }
