@@ -47,8 +47,6 @@ let firstDivStyle ={
                         </div>
                         
                         <div style={homeDivStyle}><p><strong>${product.productPrice}</strong></p></div>
-                        
-                        <button className='btn btn-primary'>Add to Cart</button>
                     </div>
                 ))}
                     

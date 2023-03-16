@@ -14,8 +14,9 @@ const Account = ()=>{
     const currentUser = {email, password};
     axios.post(url, currentUser).then((res)=>{
       setmessage(res.data.message);
+      localStorage.token = res.data.token;
       if(res.data.status){
-        navigate('/')
+        navigate('/shipping')
       }
     })
   }

@@ -18,7 +18,8 @@ const Product = ()=>{
     const itemDetails = {
       itemImage: product.productImage,
       itemName: product.productName,
-      itemPrice: product.productPrice
+      itemPrice: product.productPrice,
+      itemCount: product.productCount
     };
     axios.post(url, itemDetails);
   }

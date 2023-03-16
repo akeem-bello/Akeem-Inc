@@ -1,7 +1,9 @@
 const userModel = require('../models/user.model');
 const adminModel = require('../models/admin.model');
 const productsModel = require('../models/products.model');
-const cartModel = require('../models/cart.model')
+const cartModel = require('../models/cart.model');
+const orderDetailsModel= require('../models/orderDetails.model');
+const orderHistoryModel = require('../models/orderHistory.model');
 const SECRET = process.env.SECRET;
 const SECRET2 = process.env.SECRET_TWO;
 const jwt = require('jsonwebtoken');
@@ -178,6 +180,65 @@ const cart = (req, res)=>{
     })
 }
 
+// const deleteItem = (req, res)=>{
+//     itemIndex = req.body;
+//     cartModel.deleteOne({_id: itemIndex}, (err, result)=>{
+//         if(err){
+//             console.log(err);
+//         }else{
+//             res.send(result);
+//             console.log(result)
+//         }
+//     })
+// }
+
+const userCheckout = (req, res)=>{
+    const token = req.headers.authorization.split(' ')[1];
+    jwt.verify(token, SECRET, (err, result)=>{
+        if(err){
+            res.send({message: 'jwt failed', err, status:false})
+        }else{
+            const email = result.email;
+            userModel.findOne({email:email}, (err, result)=>{
+                res.send({message: 'congrats', status:true, result})
+            }) 
+        }
+    })
+    
+}
+
+const saveOrderDetails = (req, res)=>{
+    const orderDetails = req.body;
+    let form = new orderDetailsModel(orderDetails);
+    form.save((err)=>{
+        if(err){
+            console.log(err);
+            res.status(500).send({message: 'Internal Server Error', status:false})
+        }
+    })
+}
+
+const paymentPage = (req, res)=>{
+    orderDetailsModel.find((err, result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send({result, status:true});
+        }
+    })
+}
+
+const saveOrderHistory = (req, res)=>{
+    const orderHistory = req.body;
+    let form = new orderHistoryModel(orderHistory);
+    form.save((err)=>{
+        if(err){
+            console.log(err);
+            res.status(500).send({message: 'Internal Server Error', status:false})
+        }
+    })
+}
+
 module.exports = {
     registerUser, 
     userSignIn, 
@@ -188,5 +249,10 @@ module.exports = {
     displayItems,
     displayProduct,
     addToCart,
-    cart
+    cart,
+    // deleteItem,
+    userCheckout,
+    paymentPage,
+    saveOrderDetails,
+    saveOrderHistory
 }

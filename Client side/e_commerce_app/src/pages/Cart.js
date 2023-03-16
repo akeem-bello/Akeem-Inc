@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Cart = ()=>{
   const url = 'http://localhost:4000/users/cart';
+  const token = localStorage.token;
+  const navigate = useNavigate();
   const [qty, setqty] = useState(1);
   const [cart, setcart] = useState([]);
   useEffect(() => {
@@ -11,19 +14,48 @@ const Cart = ()=>{
       setcart(res.data.cart);
     })
   }, [])
-  
 
-  let orderTotal = 0;
-  for(let i = 0; i < cart.length; i++){
-    orderTotal += cart[i].itemPrice; 
+  // const deleteItem = ()=>{
+  //   const url = 'http://localhost:4000/users/cart';
+  //   let currentItem = cart._id
+  //   axios.post(url, currentItem);
+  // }
+
+  const checkout = ()=>{
+    if(token){
+      navigate('/shipping');
+    }else{
+      navigate('/signin');
+    }
+    saveOrderDetails();
   }
 
+  const saveOrderDetails = ()=>{
+    const url = 'http://localhost:4000/users/payment';
+    const orderDetails = {
+      productsTotal: itemsTotal,
+      orderTax: tax,
+      orderShipping: shipping,
+      orderTotal: orderTotal
+    };
+    axios.post(url, orderDetails);
+  }
+  
 
-  const increaseQty = (cartIndex)=>{
-    for(let i = 0; i < cart.length; i++){
-      if(cart.filter((index)=>(index = cartIndex))){
+  let itemsTotal = 0;
+  for(let i = 0; i < cart.length; i++){
+    itemsTotal += cart[i].itemPrice; 
+  }
+
+  let tax = itemsTotal * 0.05;
+
+  let shipping = itemsTotal * 0.01;
+
+  let orderTotal = itemsTotal + tax + shipping;
+
+  const increaseQty = ()=>{
+      if(cart.filter((index)=>(index = cart._id))){
         setqty(qty + 1);
-      }
     }
     
   }
@@ -105,7 +137,7 @@ const Cart = ()=>{
                     </div><br />
                     
                     <div className='text-center'>
-                      <button className='btn' onClick={decreaseQty}><i className="fa-solid fa-minus-circle"></i></button> {qty} <button className='btn' onClick={increaseQty}><i className="fas fa-plus-circle"></i></button>
+                      <button className='btn' onClick={decreaseQty}><i className="fa-solid fa-minus-circle"></i></button> {qty} <button className='btn' onClick={()=>increaseQty(index)} disabled={qty === cartItem.itemCount}><i className="fas fa-plus-circle"></i></button>
                     </div>
 
                     <div className='mt-3 mb-3 text-center'>
@@ -123,16 +155,46 @@ const Cart = ()=>{
 
                 <div className="row"><hr />
                   <div className="col-6">
-                    <h6><strong>Subtotal</strong></h6>
+                    <h6><strong>Items</strong></h6>
                   </div>
 
                   <div className="col-6">
-                    <h6><strong>${orderTotal}</strong></h6>
+                    <h6><strong>${itemsTotal}</strong></h6>
+                  </div><hr />
+                </div>
+
+                <div className="row">
+                  <div className="col-6">
+                    <h6><strong>Shipping</strong></h6>
+                  </div>
+
+                  <div className="col-6">
+                    <h6><strong>${shipping.toFixed(2)}</strong></h6>
+                  </div><hr />
+                </div>
+
+                <div className="row">
+                  <div className="col-6">
+                    <h6><strong>Tax</strong></h6>
+                  </div>
+
+                  <div className="col-6">
+                    <h6><strong>${tax.toFixed(2)}</strong></h6>
+                  </div><hr />
+                </div>
+
+                <div className="row">
+                  <div className="col-6">
+                    <h6><strong>Order Total</strong></h6>
+                  </div>
+
+                  <div className="col-6">
+                    <h6><strong>${orderTotal.toFixed(2)}</strong></h6>
                   </div><hr />
                 </div>
 
                 <div>
-                  <button className='btn btn-dark w-100'>Checkout</button>
+                  <button className='btn btn-dark w-100' onClick={checkout}>Checkout</button>
                 </div>
               </div>
             </div>
