@@ -21,15 +21,6 @@ const Cart = ()=>{
   //   axios.post(url, currentItem);
   // }
 
-  const checkout = ()=>{
-    if(token){
-      navigate('/shipping');
-    }else{
-      navigate('/signin');
-    }
-    saveOrderDetails();
-  }
-
   const saveOrderDetails = ()=>{
     const url = 'http://localhost:4000/users/payment';
     const orderDetails = {
@@ -40,7 +31,15 @@ const Cart = ()=>{
     };
     axios.post(url, orderDetails);
   }
-  
+
+  const checkout = ()=>{
+    if(token){
+      navigate('/shipping');
+    }else{
+      navigate('/signin');
+    }
+    saveOrderDetails();
+  }
 
   let itemsTotal = 0;
   for(let i = 0; i < cart.length; i++){

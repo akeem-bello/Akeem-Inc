@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 function Payment() {
   const url = 'http://localhost:4000/users/payment';
@@ -25,6 +26,8 @@ function Payment() {
     }
   }, [])
 
+  const amount = paymentSummary.total;
+
   const saveOrderHistory = ()=>{
     const url = 'http://localhost:4000/users/order-history';
     const orderHistory = {
@@ -34,6 +37,7 @@ function Payment() {
       orderTotal: paymentSummary.total
     };
     axios.post(url, orderHistory);
+    navigate('/');
   }
 
   let styleOne = {
@@ -50,6 +54,7 @@ function Payment() {
     width: '75%',
     padding: '20px',
     marginRight: '40px',
+    height: '100%'
   }
 
   let styleFour = {
@@ -80,7 +85,7 @@ function Payment() {
               </div>
 
               <div className="col-6">
-                <p>${paymentSummary.items.toFixed(2)}</p>
+                <p>${paymentSummary.items}</p>
               </div><hr />
             </div>
 
@@ -90,7 +95,7 @@ function Payment() {
               </div>
 
               <div className="col-6">
-                <p>${paymentSummary.shipping.toFixed(2)}</p>
+                <p>${paymentSummary.shipping}</p>
               </div><hr />
             </div>
 
@@ -100,7 +105,7 @@ function Payment() {
               </div>
 
               <div className="col-6">
-                <p>${paymentSummary.tax.toFixed(2)}</p>
+                <p>${paymentSummary.tax}</p>
               </div><hr />
             </div>
 
@@ -110,12 +115,34 @@ function Payment() {
               </div>
 
               <div className="col-6">
-                <p><strong>${paymentSummary.total.toFixed(2)}</strong></p>
+                <p><strong>${paymentSummary.total}</strong></p>
               </div><hr />
             </div>
 
             <div>
-              <button className='btn btn-dark w-100' onClick={saveOrderHistory}><i>PayPal</i></button>
+              <PayPalScriptProvider options={{"client-id": "AfPi11sxTKiNh8QPX2dgQlLJhQ_By-Ac1mrhzCaiQHMWYQ_AjoGmvodcMnr8aT7G0SBl-yiCjyRtTOPY"}}>
+                <PayPalButtons
+                  forceReRender={[amount]} 
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: amount,
+                            },
+                              },
+                            ],
+                        })
+                  }}
+                  onApprove={(data, actions)=>{
+                    return actions.order.capture().then(function (details){
+                      saveOrderHistory();
+                      localStorage.removeItem('shippingDetails')
+                      alert("Transaction completed by " + details.payer.name.given_name);
+                    })
+                  }}
+                />
+              </PayPalScriptProvider>
             </div>
           </div>
         </div>
