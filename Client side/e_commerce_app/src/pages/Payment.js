@@ -29,11 +29,11 @@ function Payment() {
   const amount = paymentSummary.total;
 
   const saveOrderHistory = ()=>{
-    const url = 'http://localhost:4000/users/order-history';
+    const url = 'http://localhost:4000/users/dashboard';
     const orderHistory = {
       shippingName: address.fullName,
       shippingTelNumber: address.phoneNumber,
-      shippingAddress: address.address,
+      shippingAddress: address.address + "," + ' ' + address.city + "," + ' ' + address.province + "," + ' ' + address.postalCode + " " + address.country,
       orderTotal: paymentSummary.total
     };
     axios.post(url, orderHistory);
@@ -120,7 +120,7 @@ function Payment() {
             </div>
 
             <div>
-              <PayPalScriptProvider options={{"client-id": "AfPi11sxTKiNh8QPX2dgQlLJhQ_By-Ac1mrhzCaiQHMWYQ_AjoGmvodcMnr8aT7G0SBl-yiCjyRtTOPY"}}>
+              <PayPalScriptProvider options={{"client-id": `${process.env.REACT_APP_PAYPAL_CLIENT_ID}`}}>
                 <PayPalButtons
                   forceReRender={[amount]} 
                   createOrder={(data, actions) => {
@@ -137,7 +137,8 @@ function Payment() {
                   onApprove={(data, actions)=>{
                     return actions.order.capture().then(function (details){
                       saveOrderHistory();
-                      localStorage.removeItem('shippingDetails')
+                      localStorage.removeItem('shippingDetails');
+                      setpaymentSummary('');
                       alert("Transaction completed by " + details.payer.name.given_name);
                     })
                   }}

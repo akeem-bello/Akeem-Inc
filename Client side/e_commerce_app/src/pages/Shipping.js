@@ -17,6 +17,7 @@ function Shipping() {
       "Content-Type": "application/json"
     }}).then((res)=>{
       setuser(res.data.result);
+      console.log(res.data.result)
       if(!res.data.status){
           localStorage.removeItem('token')
           navigate('/signin')

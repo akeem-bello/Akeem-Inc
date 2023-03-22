@@ -32,8 +32,8 @@ let firstDivStyle ={
           </div>
 
             <div className="row">
-                {allProducts.map((product)=>(
-                    <div className="col-4" style={firstDivStyle} key={product._id}>
+                {allProducts.map((product, index)=>(
+                    <div className="col-4" style={firstDivStyle} key={index}>
                         <Link to={`/product/${product._id}`}>
                             <img src={product.productImage} alt={product.productName}/>
                         </Link>

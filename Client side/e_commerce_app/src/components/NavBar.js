@@ -1,7 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const NavBar = ()=>{
+    const url = 'http://localhost:4000/users/shipping';
+    const [user, setuser] = useState('')
+    const token = localStorage.token;
+  
+    useEffect(() => {
+      axios.get(url, {
+        headers:{
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }}).then((res)=>{
+        setuser(res.data.result);
+      })
+    }, []);
+
     let linkStyle ={
         marginRight: '40px',
         textDecoration: 'none'
@@ -26,7 +42,7 @@ const NavBar = ()=>{
             <input className='w-25' type="text" placeholder=' Search products' style={inpStyle}/>
             <button className="btn-light" style={btnStyle}><i className="fa-solid fa-magnifying-glass"></i></button>
             <Link to='/signin' style={linkStyle}>Sign In</Link>
-                {/* <p style={test}>Hi, {user.firstName}</p> */}
+            {token ? <Link to='/dashboard' style={linkStyle}>Hi, {user.firstName}</Link> : ''}
             <Link to='/contact' style={linkStyle}>Contact</Link>
             <Link to='/cart' style={linkStyle}><i className="fa-solid fa-cart-shopping"></i> Cart</Link>
         </div>

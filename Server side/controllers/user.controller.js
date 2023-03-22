@@ -239,6 +239,16 @@ const saveOrderHistory = (req, res)=>{
     })
 }
 
+const getOrderHistory = (req, res)=>{
+    orderHistoryModel.find((err, history)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send({history});
+        }
+    })
+}
+
 module.exports = {
     registerUser, 
     userSignIn, 
@@ -254,5 +264,6 @@ module.exports = {
     userCheckout,
     paymentPage,
     saveOrderDetails,
-    saveOrderHistory
+    saveOrderHistory,
+    getOrderHistory
 }

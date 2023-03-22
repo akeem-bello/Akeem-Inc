@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import Product from './pages/Product';
 import Shipping from './pages/Shipping';
 import Payment from './pages/Payment';
+import Dashboard from './pages/Dashboard';
 
 const App = ()=>{
   const token = localStorage.token;
@@ -28,6 +29,7 @@ const App = ()=>{
         <Route path='/shipping' element={token ? <Shipping /> : <Navigate to='/signin' />} />
         <Route path='/payment' element={token ? <Payment /> : <Navigate to='/signin' />} />
         <Route path='/cart' element={<Cart />}/>
+        <Route path='/dashboard' element={token ? <Dashboard /> : <Navigate to='/signin' />}/>
         <Route path='/admin-signin' element={<AdminSignin />}/>
         <Route path='/admin-signup' element={<AdminSignUp />}/>
         <Route path='/admin/add-items' element={token2 ? <AddItems /> : <Navigate to='/admin-signin'/>}/>
