@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Rating from '../components/Rating';
+import {homeDivStyle, firstDivStyle} from '../resources/homeStyles'
 
 const Home = ()=>{
     const url = 'http://localhost:4000/users/';
@@ -11,15 +12,6 @@ const Home = ()=>{
         setallProducts(res.data.products);
     })
     }, []);
-    
-  let homeDivStyle ={
-    fontSize: '13px',
-    marginBottom: '20px',
-}
-
-let firstDivStyle ={
-    padding: '6% 10%'
-}
     
   return (
     <>

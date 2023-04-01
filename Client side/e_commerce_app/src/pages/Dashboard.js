@@ -22,27 +22,6 @@ function Dashboard() {
     <div className='container my-5'>
         <button className='btn btn-dark' style={{color: '#0D6EFD'}} onClick={logOut}>Sign Out</button>
         <h2 className='text-center mb-5'>Order History</h2>
-        {/* <div className="row text-center">
-            <div className="col-1"><h5>S/N</h5></div>
-            <div className="col-4"><h5>SHIPPING DETAILS</h5></div>
-            <div className="col-2"><h5>DATE</h5></div>
-            <div className="col-1"><h5>TOTAL</h5></div>
-            <div className="col-4"><h5>ORDER ID</h5></div>
-        </div><hr></hr>
-
-        {history.map((history, index)=>(
-            <div className="row text-center" key={index}>
-                <div className="col-1 my-3">{index+1}</div>
-                <div className="col-4 my-3">
-                    <div>{history.shippingName}</div>
-                    <div>{history.shippingTelNumber}</div>
-                    <div>{history.shippingAddress}</div>
-                </div>
-                <div className="col-2 my-3">{history.createdAt}</div>
-                <div className="col-1 my-3">${history.orderTotal}</div>
-                <div className="col-4 my-3">{history._id}</div> 
-        </div>))} */}
-
         <table className='table'>
             <tr>
                 <th>S/N</th>

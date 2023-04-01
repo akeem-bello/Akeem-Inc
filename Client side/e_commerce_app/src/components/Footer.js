@@ -1,10 +1,8 @@
-import React from 'react'
+import React from 'react';
+import {pStyle} from '../resources/footerStyles';
 
 const Footer = ()=> {
-    let pStyle = {
-        color: '#0D6EFD',
-        marginRight: '20px'
-    }
+    
   return (
     <>
         <footer style={{padding:'1% 15%', background: '#212529'}}>

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import {divStyle, colStyle, headStyle, labelStyle, btnStyle, inpStyle} from '../resources/adminSigninStyles'
 
 const AdminSignin = ()=> {
     const url = 'http://localhost:4000/users/admin-signin';
@@ -19,36 +20,7 @@ const AdminSignin = ()=> {
           }
         })
     }
-    let divStyle = {
-        padding: '0% 23%'
-      }
-      
-      let colStyle = {
-        borderRadius: '5%',
-        backgroundColor: 'white',
-        marginTop: '60px'
-      }
-      
-      let headStyle = {
-        color: 'black'
-      }
-      
-      let labelStyle = {
-        fontSize: '14px',
-        marginTop: '20px',
-        color: 'black'
-      }
-      
-      let btnStyle = {
-        backgroundColor: '#364EC6',
-        color: 'white',
-        float: 'center',
-        fontSize: '16px'
-      }
-      
-      let inpStyle = {
-        backgroundColor: '#F0E6E6'
-      }
+    
   return (
     <div>
         <div className="container" style={{marginBottom: '105px'}}>

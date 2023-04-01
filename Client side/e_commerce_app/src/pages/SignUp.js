@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {divStyle, contStyle} from '../resources/signupStyles'
 
 const SignUp = ()=>{
     const navigate = useNavigate();
@@ -25,14 +26,6 @@ const SignUp = ()=>{
         setpassword('');
       }
 
-    let divStyle = {
-        padding: '0% 20%'
-    }
-
-    let contStyle = {
-      marginTop: '60px',
-      marginBottom: '80px'
-  }
   return (
     <>
        <div style={contStyle} className='container'>

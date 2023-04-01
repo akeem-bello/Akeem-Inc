@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import {styleOne, styleTwo, styleThree, styleFour} from '../resources/paymentStyles';
 
 function Payment() {
   const url = 'http://localhost:4000/users/payment';
@@ -11,11 +12,12 @@ function Payment() {
 
   useEffect(() => {
     axios.get(url).then((res)=>{
+      console.log(res)
       setpaymentSummary({
-        items: res.data.result[0].productsTotal,
-        shipping: res.data.result[0].orderShipping,
-        tax: res.data.result[0].orderTax,
-        total: res.data.result[0].orderTotal
+        items: res.data.result[1].productsTotal,
+        shipping: res.data.result[1].orderShipping,
+        tax: res.data.result[1].orderTax,
+        total: res.data.result[1].orderTotal
       });
     })
 
@@ -38,29 +40,6 @@ function Payment() {
     };
     axios.post(url, orderHistory);
     navigate('/');
-  }
-
-  let styleOne = {
-    marginTop: '50px',
-    marginBottom: '75px'
-}
-
-  let styleTwo = {
-    display: 'flex',
-    marginTop: '20px'
-  }
-
-  let styleThree = {
-    width: '75%',
-    padding: '20px',
-    marginRight: '40px',
-    height: '100%'
-  }
-
-  let styleFour = {
-    width: '25%',
-    padding: '20px',
-    backgroundColor: '#83EFE2'
   }
   
   return (

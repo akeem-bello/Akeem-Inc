@@ -180,17 +180,16 @@ const cart = (req, res)=>{
     })
 }
 
-// const deleteItem = (req, res)=>{
-//     itemIndex = req.body;
-//     cartModel.deleteOne({_id: itemIndex}, (err, result)=>{
-//         if(err){
-//             console.log(err);
-//         }else{
-//             res.send(result);
-//             console.log(result)
-//         }
-//     })
-// }
+const deleteItem = (req, res)=>{
+    itemIndex = req.body.id;
+    cartModel.findByIdAndDelete(itemIndex, (err, result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send(result);
+        }
+    })
+}
 
 const userCheckout = (req, res)=>{
     const token = req.headers.authorization.split(' ')[1];
@@ -260,7 +259,7 @@ module.exports = {
     displayProduct,
     addToCart,
     cart,
-    // deleteItem,
+    deleteItem,
     userCheckout,
     paymentPage,
     saveOrderDetails,

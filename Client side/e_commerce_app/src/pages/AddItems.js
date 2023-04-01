@@ -54,14 +54,12 @@ const AddItems = ()=> {
         localStorage.removeItem('token2');
         navigate('/admin-signin');
     }
-    let divStyle = {
-        padding: '0% 20%'
-    }
+   
   return (
     <>
         <div className="container mt-5" style={{marginBottom: '93px'}}>
             <button className='btn btn-secondary' onClick={logOut}>Log Out</button>
-            <div className="row" style={divStyle}>
+            <div className="row" style={{padding: '0% 20%'}}>
                 <div className="col-7 mx-auto shadow p-5">
                     <h3 className='text-center mb-3'>Add Product</h3>
 

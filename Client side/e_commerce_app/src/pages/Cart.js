@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import {contStyle, styleOne, styleTwo, styleThree, styleFour, styleFive} from '../resources/cartStyles'
 
 const Cart = ()=>{
   const url = 'http://localhost:4000/users/cart';
@@ -9,17 +10,21 @@ const Cart = ()=>{
   const navigate = useNavigate();
   const [qty, setqty] = useState(1);
   const [cart, setcart] = useState([]);
-  useEffect(() => {
+  
+  const getCart = ()=>{
     axios.get(url).then((res)=>{
       setcart(res.data.cart);
     })
+  }
+  useEffect(() => {
+    getCart();
   }, [])
 
-  // const deleteItem = ()=>{
-  //   const url = 'http://localhost:4000/users/cart';
-  //   let currentItem = cart._id
-  //   axios.post(url, currentItem);
-  // }
+  const deleteItem = (id)=>{
+    const url = 'http://localhost:4000/users/cart/delete';
+    axios.post(url, {id});
+    getCart();
+  }
 
   const saveOrderDetails = ()=>{
     const url = 'http://localhost:4000/users/payment';
@@ -55,45 +60,14 @@ const Cart = ()=>{
   const increaseQty = ()=>{
       if(cart.filter((index)=>(index = cart._id))){
         setqty(qty + 1);
-    }
-    
+    } 
   }
 
   const decreaseQty = ()=>{
     {qty === 1 ? setqty(qty) : setqty(qty - 1)};
   }
   
-  let contStyle = {
-    marginTop: '40px',
-    marginBottom: '75px'
-}
-
-  let styleOne = {
-    padding: '0% 10%'
-  }
-
-  let styleTwo = {
-    marginRight: '-80px'
-  }
-
-  let styleThree = {
-    display: 'flex',
-    marginTop: '20px'
-  }
-
-  let styleFour = {
-    width: '75%',
-    padding: '20px',
-    marginRight: '40px',
-    backgroundColor: '#DAE0E9'
-  }
-
-  let styleFive = {
-    width: '25%',
-    padding: '10px',
-    height: '100%',
-    backgroundColor: '#83EFE2'
-  }
+ 
 
   return (
     <>
@@ -140,7 +114,7 @@ const Cart = ()=>{
                     </div>
 
                     <div className='mt-3 mb-3 text-center'>
-                    <button className='btn btn-sm btn-secondary'><i className="fa-solid fa-trash"></i> Remove</button>
+                    <button className='btn btn-sm btn-secondary' onClick={()=>deleteItem(cartItem._id)}><i className="fa-solid fa-trash"></i> Remove</button>
                   </div> 
                   </div>
                 </div> 

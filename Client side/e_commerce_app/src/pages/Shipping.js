@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useFormik } from 'formik';
+import {divStyle, inpStyle, labelStyle, headStyle, colStyle, btnStyle} from '../resources/shippingStyles'
 
 function Shipping() {
   const url = 'http://localhost:4000/users/shipping';
@@ -94,34 +95,6 @@ function Shipping() {
     }
   })
 
-  let divStyle = {
-    padding: '0% 23%'
-}
-
-let inpStyle = {
-    backgroundColor: '#F0E6E6'
-}
-
-let labelStyle = {
-    fontSize: '14px',
-    marginTop: '20px',
-    color: '#0D6EFD'
-}
-
-let headStyle = {
-    color: '#0D6EFD'
-}
-
-let colStyle = {
-    borderRadius: '5%',
-    backgroundColor: 'white'
-}
-
-let btnStyle = {
-    color: '#0D6EFD',
-    
-    fontSize: '16px'
-}
   return (
     <>
       <div className="container">

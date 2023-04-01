@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
 import Rating from '../components/Rating';
+import {contStyle, styleOne, styleTwo, styleThree} from '../resources/productStyles'
 
 const Product = ()=>{
     const {_id} = useParams();
@@ -22,25 +23,6 @@ const Product = ()=>{
       itemCount: product.productCount
     };
     axios.post(url, itemDetails);
-  }
-  
-  let contStyle = {
-      marginTop: '60px',
-      marginBottom: '75px'
-  }
-
-  let styleOne = {
-    display: 'flex',
-    marginTop: '20px'
-  }
-
-  let styleTwo = {
-    width: '50%',
-    marginLeft: '200px',
-  }
-
-  let styleThree = {
-    width: '25%'
   }
 
   return (

@@ -14,7 +14,7 @@ router.get('/', userController.displayItems);
 router.get('/product/:id', userController.displayProduct);
 router.post('/cart', userController.addToCart);
 router.get('/cart', userController.cart);
-// router.post('/cart/', userController.deleteItem);
+router.post('/cart/delete', userController.deleteItem);
 router.post('/dashboard', userController.saveOrderHistory);
 router.get('/dashboard', userController.getOrderHistory);
 module.exports = router;
